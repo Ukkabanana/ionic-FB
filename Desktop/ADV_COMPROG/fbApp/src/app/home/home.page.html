@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color=primary class="title">
+      FACEBOOK
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-button class="title" expand='block' fill='solid' color='primary'  (click)='getTemp()' title='Click Me to get Posts data!!'>
+    GET POST
+  </ion-button>
+  <div *ngIf='temp$ | async as tmp'>
+    <!--
+    <h1>{{tmp.cod}}</h1>
+    <h2>{{tmp.cnt}}</h2>
+    -->
+    <ion-card *ngFor='let item of tmp.posts.data'>
+      <!--{{item.dt*1000 | date: 'yyyy-MM-dd HH:mm:ss Z'}}-->
+      <div *ngIf="item.attachments">
+      <ion-grid>
+        <ion-row *ngFor="let atts of item.attachments.data">
+          <div *ngIf="atts.subattachments">
+          <ion-col *ngFor="let att of atts.subattachments.data">
+            <ion-img src="{{att.media.image.src}}"></ion-img>
+          </ion-col>
+          </div>
+          <div class="ion-text-center">
+            <ion-col *ngIf="atts.media">
+              <ion-text color="tertiary">
+                  <h5 class="title">{{atts.title}}</h5>
+              </ion-text>
+              <ion-img src="{{atts.media.image.src}}"></ion-img>
+              <ion-text color="dark">{{item.message}}</ion-text>
+              <ion-text color="dark"><p>{{atts.description}}</p></ion-text>
+            </ion-col>
+          </div>
+        </ion-row>
+      </ion-grid>
+      </div>
+    </ion-card>
+  </div>
+</ion-content>
